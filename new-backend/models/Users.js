@@ -10,35 +10,38 @@ class Users{
 
     // }
 
-    constructor(username,email,password,address){
+    constructor(username,email,password,address, full_name){
         this.username = username
         this.email = email
         this.password = password
         this.address = address
+        this.full_name = full_name
 
     }
 
     save(){
 
         let sql = `
-        INSERT INTO Customer(
+        INSERT INTO registration(
             UserName, 
             Password, 
             Address,
-            Email
+            Email,
+            full_name
         )
         VALUES(
             '${this.username}', 
             '${this.password}', 
             '${this.address}', 
-            '${this.email}'
+            '${this.email}',
+            '${this.full_name}'
             )`
 
         return db.execute(sql)
     }
 
     static findAll(){
-        let sql = `SELECT * FROM users`
+        let sql = `SELECT * FROM customer`
 
         return db.execute(sql)
 
@@ -51,7 +54,12 @@ class Users{
     }
 
     static findById(id){
-        let sql = `SELECT * FROM users WHERE id='${id}'`
+        let sql = `SELECT * FROM customer WHERE customer_id='${id}'`
+
+        return db.execute(sql)
+    }
+    static findByUserName(username){
+        let sql = `SELECT * FROM customer WHERE username='${username}'`
 
         return db.execute(sql)
     }
